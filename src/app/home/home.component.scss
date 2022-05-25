@@ -7,3 +7,12 @@ button:first-of-type {
 button:last-of-type {
   margin-right: 0;
 }
+
+button:hover,
+button:focus {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+button.linkSelecionado {
+  background: rgba(0, 0, 0, 0.2);
+}

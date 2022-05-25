@@ -5,14 +5,7 @@
   background-image: linear-gradient(225deg, #a63ab7 0%, #673ab7 50%, #3a4bb7 100%);
 }
 
-mat-card {
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  top: 20%;
-}
-
-mat-form-field {
-  display: block;
+.container {
+  width: 40rem;
+  background-color: red;
 }

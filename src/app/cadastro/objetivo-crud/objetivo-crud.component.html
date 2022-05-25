@@ -1,1 +1,115 @@
-<p>objetivo works!</p>
+<div *ngIf="!idSelecionado">
+  <div class="barra-botao">
+    <button pButton class="p-button-sm" routerLink="novo">Novo</button>
+  </div>
+
+  <p-table [value]="linhas" responsiveLayout="scroll" p-datatable-striped styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="col-acao"></th>
+        <th class="col-id">Id</th>
+        <th>Nome</th>
+        <th>Início</th>
+        <th>Fim</th>
+        <th>Base</th>
+        <th>Prêmio</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-_linha>
+      <tr>
+        <td class="col-acao">
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-rounded p-button-text"
+            [disabled]="processando"
+            [routerLink]="[_linha.id]"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-text"
+            [disabled]="processando"
+            (click)="excluir(_linha.id)"
+          ></button>
+        </td>
+        <td class="col-id">{{ _linha.id }}</td>
+        <td>{{ _linha.nome }}</td>
+        <td class="col-dt">{{ _linha.dtInicio | date: 'shortDate' }}</td>
+        <td class="col-dt">{{ _linha.dtFim | date: 'shortDate' }}</td>
+        <td>{{ obterNomeBase(_linha.base) }}</td>
+        <td>{{ obterNomePremio(_linha.premio) }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<div *ngIf="idSelecionado && form">
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <div class="grid formgrid">
+      <div class="field col-12 sm:col-6 lg:col-4 xl:col-3">
+        <label for="nome">Nome</label>
+        <input formControlName="nome" id="nome" class="w-full p-inputtext-sm" pInputText autofocus />
+      </div>
+
+      <div class="field col-12 sm:col-3 lg:col-3 xl:col-2">
+        <label for="dtInicio">Início</label>
+        <p-calendar
+          formControlName="dtInicio"
+          inputId="dtInicio"
+          inputStyleClass="p-inputtext-sm"
+          styleClass="w-full"
+          [showIcon]="true"
+          [showButtonBar]="true"
+        ></p-calendar>
+      </div>
+
+      <div class="field col-12 sm:col-3 lg:col-3 xl:col-2">
+        <label for="dtFim">Fim</label>
+        <p-calendar
+          formControlName="dtFim"
+          inputId="dtFim"
+          inputStyleClass="p-inputtext-sm"
+          styleClass="w-full"
+          [showIcon]="true"
+          [showButtonBar]="true"
+        ></p-calendar>
+      </div>
+
+      <div class="field col-12 sm:col-6 lg:col-2 xl:col-2">
+        <label for="base">Base</label>
+        <p-dropdown
+          formControlName="base"
+          class="p-inputtext-sm"
+          styleClass="w-full"
+          [options]="bases"
+          optionLabel="nome"
+          optionValue="valor"
+        >
+        </p-dropdown>
+      </div>
+
+      <div class="field col-12 sm:col-6 lg:col-2 xl:col-2">
+        <label for="base">Prêmio</label>
+        <p-dropdown
+          formControlName="premio"
+          class="p-inputtext-sm"
+          styleClass="w-full"
+          [options]="premios"
+          optionLabel="nome"
+          optionValue="valor"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div class="barra-botao">
+      <button pButton class="p-button-sm" [disabled]="!form.valid">Salvar</button>
+      <button pButton class="p-button-sm p-button-secondary" routerLink="..">Cancelar</button>
+    </div>
+  </form>
+</div>

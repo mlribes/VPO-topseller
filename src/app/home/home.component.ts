@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MenuItem } from 'primeng/api';
+
 import { AutenticacaoService } from '../geral/autenticacao.service';
 
 @Component({
@@ -9,7 +11,14 @@ import { AutenticacaoService } from '../geral/autenticacao.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private router: Router, private autenticacaoService: AutenticacaoService) {}
+  public items: MenuItem[];
+  constructor(private router: Router, private autenticacaoService: AutenticacaoService) {
+    this.items = [
+      { label: 'Objetivo', routerLink: '/cadastro/objetivo' },
+      { label: 'Resultados', routerLink: '/conquista/conquistaGeral' },
+      { label: 'Sair', command: () => this.sair() },
+    ];
+  }
 
   ngOnInit(): void {}
 
