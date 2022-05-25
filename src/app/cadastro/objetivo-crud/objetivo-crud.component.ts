@@ -101,7 +101,6 @@ export class ObjetivoCrudComponent implements OnInit {
     dados.id = null;
     dados.dtInicio = dados.dtInicio.toISOString();
     dados.dtFim = dados.dtFim.toISOString();
-    console.log(dados);
 
     let id = this.idSelecionado || this.ID_NOVO;
     if (!isNaN(+id)) {
@@ -113,10 +112,7 @@ export class ObjetivoCrudComponent implements OnInit {
       this.http
         .post(this.urlBase, dados)
         .pipe(finalize(() => (this.processando = false)))
-        .subscribe((dados) => {
-          console.log(dados);
-          this.voltarLista();
-        });
+        .subscribe(() => this.voltarLista());
     }
   }
 
