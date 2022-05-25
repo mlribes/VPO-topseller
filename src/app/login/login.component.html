@@ -1,21 +1,23 @@
-<mat-card>
-  <mat-card-content>
-    <h2>Vendedor - Login</h2>
+<div class="fundo">
+  <mat-card>
+    <mat-card-content>
+      <h2>Vendedor - Login</h2>
 
-    <div>
-      <form [formGroup]="form" (ngSubmit)="entrar()" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
-        <mat-error *ngIf="falhaLogin"> e-Mail/senha inválido</mat-error>
-        <mat-form-field class="full-width-input">
-          <input matInput placeholder="e-Mail" formControlName="email" required cdkFocusInitial />
-          <mat-error> </mat-error>
-        </mat-form-field>
+      <div>
+        <form [formGroup]="form" (ngSubmit)="entrar()" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
+          <mat-error *ngIf="falhaLogin"> e-Mail/senha inválido</mat-error>
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="e-Mail" formControlName="email" required cdkFocusInitial />
+            <mat-error> </mat-error>
+          </mat-form-field>
 
-        <mat-form-field class="full-width-input">
-          <input matInput placeholder="Senha" formControlName="senha" type="password" required />
-          <mat-error> </mat-error>
-        </mat-form-field>
-        <button [disabled]="!form.valid" mat-raised-button color="primary">Login</button>
-      </form>
-    </div>
-  </mat-card-content>
-</mat-card>
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Senha" formControlName="senha" type="password" required />
+            <mat-error> </mat-error>
+          </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="!form.valid" color="primary">Login</button>
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

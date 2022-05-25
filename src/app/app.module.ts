@@ -34,10 +34,12 @@ import { HomeComponent } from './home/home.component';
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    A11yModule,
     MatFormFieldModule,
     MatCardModule,
+    MatButtonModule,
     MatInputModule,
-    A11yModule,
+    MatToolbarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },

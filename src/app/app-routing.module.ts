@@ -15,6 +15,20 @@ const routes: Routes = [
     canActivate: [AutenticacaoGuard],
   },
   {
+    path: 'cadastro',
+    component: HomeComponent,
+    loadChildren: () => import('./cadastro/cadastro.module').then((m) => m.CadastroModule),
+    canActivate: [AutenticacaoGuard],
+    canActivateChild: [AutenticacaoGuard],
+  },
+  {
+    path: 'conquista',
+    component: HomeComponent,
+    loadChildren: () => import('./conquista/conquista.module').then((m) => m.ConquistaModule),
+    canActivate: [AutenticacaoGuard],
+    canActivateChild: [AutenticacaoGuard],
+  },
+  {
     path: 'login',
     component: LoginComponent,
   },

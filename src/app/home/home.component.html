@@ -1,2 +1,9 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-button routerLink="/cadastro/objetivo">Objetivo</button>
+    <button mat-button routerLink="/conquista/conquistaGeral">Resultados</button>
+    <button mat-button (click)="sair()">Sair</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
 <router-outlet></router-outlet>
-<button (click)="sair()">Sair</button>
