@@ -4,10 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 
-interface IValorNome {
-  valor: string;
-  nome: string;
-}
+import { IIdNome } from '../../geral/id-nome.interface';
 
 @Component({
   selector: 'app-objetivo-crud',
@@ -23,8 +20,8 @@ export class ObjetivoCrudComponent implements OnInit {
 
   public idSelecionado: string | null = null;
   public form: FormGroup | null = null;
-  public bases: IValorNome[] = [];
-  public premios: IValorNome[] = [];
+  public bases: IIdNome[] = [];
+  public premios: IIdNome[] = [];
 
   constructor(
     private router: Router,
@@ -54,10 +51,10 @@ export class ObjetivoCrudComponent implements OnInit {
     this.processando = true;
 
     const base = ['VENDA_VLR', 'VENDA_QTDE', 'PA', 'TICKET_MEDIO'];
-    base.forEach((valor) => this.bases.push({ valor, nome: this.obterNomeBase(valor) }));
+    base.forEach((id) => this.bases.push({ id, nome: this.obterNomeBase(id) }));
 
     const premios = ['MEDALHA', 'TROFEU'];
-    premios.forEach((valor) => this.premios.push({ valor, nome: this.obterNomePremio(valor) }));
+    premios.forEach((id) => this.premios.push({ id, nome: this.obterNomePremio(id) }));
 
     this.idSelecionado = this.ID_NOVO;
     if (!isNaN(+id)) {

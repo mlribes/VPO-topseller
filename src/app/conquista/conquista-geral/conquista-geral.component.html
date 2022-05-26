@@ -1,1 +1,48 @@
-<p>conquista-geral works!</p>
+<form [formGroup]="form">
+  <div class="grid formgrid">
+    <div class="field col-12 sm:col-6 lg:col-2 xl:col-2">
+      <label for="base">Objetivo</label>
+      <p-dropdown
+        formControlName="objetivo"
+        class="p-inputtext-sm"
+        styleClass="w-full"
+        [options]="objetivos"
+        optionLabel="nome"
+        optionValue="id"
+      >
+      </p-dropdown>
+    </div>
+  </div>
+</form>
+
+<p-table [value]="conquistas" responsiveLayout="scroll" p-datatable-striped styleClass="p-datatable-sm">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Loja</th>
+      <th>Vendedor</th>
+      <th class="cpf">CPF</th>
+      <th class="vlr">Vlr</th>
+      <th class="posicao">Posicão</th>
+      <th class="premio">Prêmio</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-_conquista>
+    <tr>
+      <td>{{ _conquista.lojaNome }}</td>
+      <td>{{ _conquista.vendedorNome }}</td>
+      <td class="cpf">{{ _conquista.vendedorCpf }}</td>
+      <td class="col-numeric vlr">{{ _conquista.vlr | number: '1.2-2' }}</td>
+      <td class="col-numeric posicao">{{ _conquista.posicao | number }}</td>
+      <td class="premio">
+        <i
+          [class]="
+            'fa-solid fa-' +
+            obterImagemPremio(_conquista.objetivoPremio, _conquista.classificacao) +
+            ' ' +
+            _conquista.classificacao
+          "
+        ></i>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
