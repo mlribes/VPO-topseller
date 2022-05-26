@@ -1,6 +1,6 @@
 <form [formGroup]="form">
-  <div class="grid formgrid">
-    <div class="field col-12 sm:col-6 lg:col-2 xl:col-2">
+  <div class="grid formgrid align-items-end">
+    <div class="field col-10 sm:col-6 lg:col-4 xl:col-3">
       <label for="base">Objetivo</label>
       <p-dropdown
         formControlName="objetivo"
@@ -12,6 +12,10 @@
       >
       </p-dropdown>
     </div>
+
+    <div class="field col-2 md:col-1">
+      <button pButton class="p-button-sm" (click)="baixarXls()" [disabled]="!objetivoSelecionado">XLS</button>
+    </div>
   </div>
 </form>
 
@@ -21,7 +25,7 @@
       <th>Loja</th>
       <th>Vendedor</th>
       <th class="cpf">CPF</th>
-      <th class="vlr">Vlr</th>
+      <th class="vlr">Valor</th>
       <th class="posicao">Posicão</th>
       <th class="premio">Prêmio</th>
     </tr>

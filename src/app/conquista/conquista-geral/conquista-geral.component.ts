@@ -17,6 +17,7 @@ export class ConquistaGeralComponent implements OnInit {
   public form: FormGroup;
 
   public objetivos: IIdNome[] = [];
+  public objetivoSelecionado = '';
   public conquistas = [];
 
   constructor(private http: HttpClient, private fb: FormBuilder) {
@@ -28,7 +29,9 @@ export class ConquistaGeralComponent implements OnInit {
   ngOnInit(): void {
     this.atualizarObjetivos();
 
-    this.form.get('objetivo')?.valueChanges.subscribe((objetivo) => this.atualizarConquistas(objetivo));
+    this.form.get('objetivo')?.valueChanges.subscribe((objetivo) => {
+      this.atualizarConquistas(objetivo), (this.objetivoSelecionado = objetivo);
+    });
   }
 
   private atualizarObjetivos() {
@@ -68,5 +71,23 @@ export class ConquistaGeralComponent implements OnInit {
       retorno = 'xmark';
     }
     return retorno;
+  }
+
+  public baixarXls() {
+    this.http
+      .get(this.urlBase + this.objetivoSelecionado + '/conquista/xls', {
+        responseType: 'blob',
+        observe: 'response',
+      })
+      .subscribe((response) => {
+        if (response.body) {
+          const url = URL.createObjectURL(response.body);
+          const anchor = document.createElement('a');
+          anchor.href = url;
+          anchor.download = 'resultados.xlsx';
+          anchor.click();
+          URL.revokeObjectURL(url);
+        }
+      });
   }
 }
