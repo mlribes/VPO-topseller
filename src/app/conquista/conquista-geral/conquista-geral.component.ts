@@ -47,6 +47,7 @@ export class ConquistaGeralComponent implements OnInit {
 
   private atualizarConquistas(objetivo: string) {
     this.processando = true;
+    this.conquistas = [];
     this.http
       .get(this.urlBase + objetivo + '/conquista')
       .pipe(finalize(() => (this.processando = false)))
