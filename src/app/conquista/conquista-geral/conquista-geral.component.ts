@@ -11,45 +11,57 @@ import { IIdNome } from '../../geral/id-nome.interface';
   styleUrls: ['./conquista-geral.component.scss'],
 })
 export class ConquistaGeralComponent implements OnInit {
-  private urlBase = 'objetivo/';
+  private urlBase = 'conquista/';
 
   public processando = false;
   public form: FormGroup;
+  public tipos: IIdNome[] = [
+    { id: 'porPeriodo', nome: 'Por período' },
+    { id: 'porIndicador', nome: 'Por indicador' },
+  ];
+  public indicadores: IIdNome[] = [
+    { id: 'VENDA_VLR', nome: 'Venda R$' },
+    { id: 'VENDA_QTDE', nome: 'Venda Qtde' },
+    { id: 'PA', nome: 'PA' },
+    { id: 'TICKET_MEDIO', nome: 'Ticket Médio' },
+  ];
 
-  public objetivos: IIdNome[] = [];
-  public objetivoSelecionado = '';
   public conquistas = [];
 
   constructor(private http: HttpClient, private fb: FormBuilder) {
+    let dtFim = new Date();
+    dtFim.setDate(0);
+    let dtInicio = new Date(dtFim);
+    dtInicio.setMonth(dtInicio.getMonth() - 11);
     this.form = this.fb.group({
-      objetivo: [],
+      dtInicio: [dtInicio, Validators.required],
+      dtFim: [dtFim, Validators.required],
+      tipo: ['porPeriodo', Validators.required],
+      indicador: [{ value: 'VENDA_VLR', disabled: true }, Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.atualizarObjetivos();
-
-    this.form.get('objetivo')?.valueChanges.subscribe((objetivo) => {
-      this.atualizarConquistas(objetivo), (this.objetivoSelecionado = objetivo);
+    this.form.get('tipo')?.valueChanges.subscribe((valor) => {
+      if (valor == 'porIndicador') {
+        this.form.get('indicador')?.enable();
+      } else {
+        this.form.get('indicador')?.disable();
+      }
     });
   }
 
-  private atualizarObjetivos() {
-    this.processando = true;
-    this.http
-      .get(this.urlBase + 'lov')
-      .pipe(finalize(() => (this.processando = false)))
-      .subscribe((dados: any) => {
-        this.objetivos = dados;
-        this.objetivos.push({ nome: '--Selecione um--' });
-      });
-  }
-
-  private atualizarConquistas(objetivo: string) {
+  public atualizar() {
     this.processando = true;
     this.conquistas = [];
+
+    const url = this.form.get('tipo')?.value;
+    const dtInicio = this.form.get('dtInicio')?.value.toISOString().substring(0, 10);
+    const dtFim = this.form.get('dtFim')?.value.toISOString().substring(0, 10);
+    const indicador = this.form.get('indicador')?.value;
+
     this.http
-      .get(this.urlBase + objetivo + '/conquista')
+      .get(this.urlBase + url, { params: { dtInicio, dtFim, indicador } })
       .pipe(finalize(() => (this.processando = false)))
       .subscribe((dados: any) => (this.conquistas = dados));
   }
@@ -75,8 +87,14 @@ export class ConquistaGeralComponent implements OnInit {
   }
 
   public baixarXls() {
+    const url = this.form.get('tipo')?.value + '/xls';
+    const dtInicio = this.form.get('dtInicio')?.value.toISOString().substring(0, 10);
+    const dtFim = this.form.get('dtFim')?.value.toISOString().substring(0, 10);
+    const indicador = this.form.get('indicador')?.value;
+
     this.http
-      .get(this.urlBase + this.objetivoSelecionado + '/conquista/xls', {
+      .get(this.urlBase + url, {
+        params: { dtInicio, dtFim, indicador },
         responseType: 'blob',
         observe: 'response',
       })

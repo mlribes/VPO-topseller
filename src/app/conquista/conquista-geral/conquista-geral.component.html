@@ -1,12 +1,49 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="atualizar()">
   <div class="grid formgrid align-items-end">
-    <div class="field col-10 sm:col-6 lg:col-4 xl:col-3">
-      <label for="base">Objetivo</label>
+    <div class="field col-12 sm:col-3 lg:col-3 xl:col-2">
+      <label for="dtInicio">Início</label>
+      <p-calendar
+        formControlName="dtInicio"
+        inputId="dtInicio"
+        inputStyleClass="p-inputtext-sm"
+        styleClass="w-full"
+        [showIcon]="true"
+        [showButtonBar]="true"
+      ></p-calendar>
+    </div>
+
+    <div class="field col-12 sm:col-3 lg:col-3 xl:col-2">
+      <label for="dtFim">Fim</label>
+      <p-calendar
+        formControlName="dtFim"
+        inputId="dtFim"
+        inputStyleClass="p-inputtext-sm"
+        styleClass="w-full"
+        [showIcon]="true"
+        [showButtonBar]="true"
+      ></p-calendar>
+    </div>
+
+    <div class="field col-12 sm:col-6 lg:col-2 xl:col-2">
+      <label for="base">Tipo</label>
       <p-dropdown
-        formControlName="objetivo"
+        formControlName="tipo"
         class="p-inputtext-sm"
         styleClass="w-full"
-        [options]="objetivos"
+        [options]="tipos"
+        optionLabel="nome"
+        optionValue="id"
+      >
+      </p-dropdown>
+    </div>
+
+    <div class="field col-12 sm:col-6 lg:col-2 xl:col-2">
+      <label for="base">Indicador</label>
+      <p-dropdown
+        formControlName="indicador"
+        class="p-inputtext-sm"
+        styleClass="w-full"
+        [options]="indicadores"
         optionLabel="nome"
         optionValue="id"
       >
@@ -14,36 +51,93 @@
     </div>
 
     <div class="field col-2 md:col-1">
-      <button pButton class="p-button-sm" (click)="baixarXls()" [disabled]="!objetivoSelecionado">XLS</button>
+      <button pButton class="p-button-sm" [disabled]="!form.valid">Atualizar</button>
+    </div>
+    <div class="field col-2 md:col-1">
+      <button pButton class="p-button-sm" [disabled]="!form.valid" type="button" (click)="baixarXls()">XLS</button>
     </div>
   </div>
 </form>
 
-<p-table [value]="conquistas" responsiveLayout="scroll" p-datatable-striped styleClass="p-datatable-sm">
+<p-table
+  [value]="conquistas"
+  responsiveLayout="scroll"
+  p-datatable-striped
+  styleClass="p-datatable-sm"
+  *ngIf="form.get('tipo')?.value == 'porPeriodo'"
+>
   <ng-template pTemplate="header">
     <tr>
-      <th>Loja</th>
-      <th>Vendedor</th>
-      <th class="cpf">CPF</th>
-      <th class="vlr">Valor</th>
-      <th class="posicao">Posicão</th>
+      <th rowspan="2">Período</th>
+      <th rowspan="2">Loja</th>
+      <th rowspan="2">Vendedor</th>
+      <th rowspan="2" class="cpf">CPF</th>
+      <th colspan="2" class="indicador">Venda R$</th>
+      <th colspan="2" class="indicador">Venda Qtde</th>
+      <th colspan="2" class="indicador">PA</th>
+      <th colspan="2" class="indicador">Ticket Médio</th>
+    </tr>
+    <tr>
+      <th class="posicao">Posição</th>
+      <th class="premio">Prêmio</th>
+      <th class="posicao">Posição</th>
+      <th class="premio">Prêmio</th>
+      <th class="posicao">Posição</th>
+      <th class="premio">Prêmio</th>
+      <th class="posicao">Posição</th>
       <th class="premio">Prêmio</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-_conquista>
     <tr>
+      <td>{{ _conquista.objetivoNome }}</td>
       <td>{{ _conquista.lojaNome }}</td>
       <td>{{ _conquista.vendedorNome }}</td>
       <td class="cpf">{{ _conquista.vendedorCpf }}</td>
-      <td class="col-numeric vlr">{{ _conquista.vlr | number: '1.2-2' }}</td>
-      <td class="col-numeric posicao">{{ _conquista.posicao | number }}</td>
+      <td class="col-numeric posicao">{{ _conquista.vlrVendaPosicao | number }}</td>
       <td class="premio">
         <i
           [class]="
             'fa-solid fa-' +
-            obterImagemPremio(_conquista.objetivoPremio, _conquista.classificacao) +
+            obterImagemPremio(_conquista.objetivoPremio, _conquista.vlrVendaClassificacao) +
             ' ' +
-            _conquista.classificacao
+            _conquista.vlrVendaClassificacao
+          "
+        ></i>
+      </td>
+
+      <td class="col-numeric posicao">{{ _conquista.qtdeVendaPosicao | number }}</td>
+      <td class="premio">
+        <i
+          [class]="
+            'fa-solid fa-' +
+            obterImagemPremio(_conquista.objetivoPremio, _conquista.qtdeVendaClassificacao) +
+            ' ' +
+            _conquista.qtdeVendaClassificacao
+          "
+        ></i>
+      </td>
+
+      <td class="col-numeric posicao">{{ _conquista.paPosicao | number }}</td>
+      <td class="premio">
+        <i
+          [class]="
+            'fa-solid fa-' +
+            obterImagemPremio(_conquista.objetivoPremio, _conquista.paClassificacao) +
+            ' ' +
+            _conquista.paClassificacao
+          "
+        ></i>
+      </td>
+
+      <td class="col-numeric posicao">{{ _conquista.ticketMedioPosicao | number }}</td>
+      <td class="premio">
+        <i
+          [class]="
+            'fa-solid fa-' +
+            obterImagemPremio(_conquista.objetivoPremio, _conquista.ticketMedioClassificacao) +
+            ' ' +
+            _conquista.ticketMedioClassificacao
           "
         ></i>
       </td>
