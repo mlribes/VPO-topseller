@@ -20,7 +20,6 @@ export class ObjetivoCrudComponent implements OnInit {
 
   public idSelecionado: string | null = null;
   public form: FormGroup | null = null;
-  public bases: IIdNome[] = [];
   public premios: IIdNome[] = [];
 
   constructor(
@@ -50,9 +49,6 @@ export class ObjetivoCrudComponent implements OnInit {
   private editar(id: string) {
     this.processando = true;
 
-    const base = ['VENDA_VLR', 'VENDA_QTDE', 'PA', 'TICKET_MEDIO'];
-    base.forEach((id) => this.bases.push({ id, nome: this.obterNomeBase(id) }));
-
     const premios = ['MEDALHA', 'TROFEU'];
     premios.forEach((id) => this.premios.push({ id, nome: this.obterNomePremio(id) }));
 
@@ -76,7 +72,6 @@ export class ObjetivoCrudComponent implements OnInit {
       nome: [dados.nome, Validators.required],
       dtInicio: [dados.dtInicio ? new Date(dados.dtInicio) : null, Validators.required],
       dtFim: [dados.dtFim ? new Date(dados.dtFim) : null, Validators.required],
-      base: [dados.base || 'VENDA_VLR', Validators.required],
       premio: [dados.premio || 'MEDALHA', Validators.required],
     });
   }
@@ -118,21 +113,6 @@ export class ObjetivoCrudComponent implements OnInit {
       relativeTo: this.route,
       queryParamsHandling: 'merge',
     });
-  }
-
-  public obterNomeBase(base: string): string {
-    switch (base) {
-      case 'VENDA_VLR':
-        return 'Venda Valor';
-      case 'VENDA_QTDE':
-        return 'Venda Qtde';
-      case 'PA':
-        return 'PA';
-      case 'TICKET_MEDIO':
-        return 'Ticket Médio';
-      default:
-        return '?' + base;
-    }
   }
 
   public obterNomePremio(premio: string): string {

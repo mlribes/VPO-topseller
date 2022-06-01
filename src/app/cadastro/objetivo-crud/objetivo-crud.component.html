@@ -11,7 +11,6 @@
         <th>Nome</th>
         <th>Início</th>
         <th>Fim</th>
-        <th>Base</th>
         <th>Prêmio</th>
       </tr>
     </ng-template>
@@ -41,7 +40,6 @@
         <td>{{ _linha.nome }}</td>
         <td class="col-dt">{{ _linha.dtInicio | date: 'shortDate' }}</td>
         <td class="col-dt">{{ _linha.dtFim | date: 'shortDate' }}</td>
-        <td>{{ obterNomeBase(_linha.base) }}</td>
         <td>{{ obterNomePremio(_linha.premio) }}</td>
       </tr>
     </ng-template>
@@ -78,19 +76,6 @@
           [showIcon]="true"
           [showButtonBar]="true"
         ></p-calendar>
-      </div>
-
-      <div class="field col-12 sm:col-6 lg:col-2 xl:col-2">
-        <label for="base">Base</label>
-        <p-dropdown
-          formControlName="base"
-          class="p-inputtext-sm"
-          styleClass="w-full"
-          [options]="bases"
-          optionLabel="nome"
-          optionValue="id"
-        >
-        </p-dropdown>
       </div>
 
       <div class="field col-12 sm:col-6 lg:col-2 xl:col-2">
