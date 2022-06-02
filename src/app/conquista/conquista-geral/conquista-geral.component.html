@@ -60,7 +60,7 @@
 </form>
 
 <p-table
-  [value]="conquistas"
+  [value]="linhas"
   responsiveLayout="scroll"
   p-datatable-striped
   styleClass="p-datatable-sm"
@@ -78,13 +78,13 @@
       <th colspan="2" class="indicador">Ticket Médio</th>
     </tr>
     <tr>
-      <th class="posicao">Posição</th>
+      <th class="posicao">Pos</th>
       <th class="premio">Prêmio</th>
-      <th class="posicao">Posição</th>
+      <th class="posicao">Pos</th>
       <th class="premio">Prêmio</th>
-      <th class="posicao">Posição</th>
+      <th class="posicao">Pos</th>
       <th class="premio">Prêmio</th>
-      <th class="posicao">Posição</th>
+      <th class="posicao">Pos</th>
       <th class="premio">Prêmio</th>
     </tr>
   </ng-template>
@@ -141,6 +141,49 @@
           "
         ></i>
       </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-table
+  [value]="linhas"
+  responsiveLayout="scroll"
+  p-datatable-striped
+  styleClass="p-datatable-sm"
+  *ngIf="form.get('tipo')?.value == 'porIndicador'"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th rowspan="2">Loja</th>
+      <th rowspan="2">Vendedor</th>
+      <th rowspan="2" class="cpf">CPF</th>
+      <th colspan="2" class="periodo" *ngFor="let _c of colunas">{{ _c['nome'] }}</th>
+    </tr>
+    <tr>
+      <ng-template ngFor let-_c [ngForOf]="colunas">
+        <th class="posicao">Pos</th>
+        <th class="premio">Prêmio</th>
+      </ng-template>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-_linha>
+    <tr>
+      <td>{{ _linha.lojaNome }}</td>
+      <td>{{ _linha.vendedorNome }}</td>
+      <td>{{ _linha.vendedorCpf }}</td>
+      <ng-template ngFor let-_c [ngForOf]="colunas" let-_i="index">
+        <td class="posicao">{{ _linha.valores['c' + _i].posicao }}</td>
+        <td class="premio">
+          <i
+            [class]="
+              'fa-solid fa-' +
+              obterImagemPremio(_c['premio'], _linha.valores['c' + _i].classificacao) +
+              ' ' +
+              _linha.valores['c' + _i].classificacao
+            "
+          ></i>
+        </td>
+      </ng-template>
     </tr>
   </ng-template>
 </p-table>

@@ -26,7 +26,8 @@ export class ConquistaGeralComponent implements OnInit {
     { id: 'TICKET_MEDIO', nome: 'Ticket Médio' },
   ];
 
-  public conquistas = [];
+  public colunas = [];
+  public linhas = [];
 
   constructor(private http: HttpClient, private fb: FormBuilder) {
     let dtFim = new Date();
@@ -48,12 +49,16 @@ export class ConquistaGeralComponent implements OnInit {
       } else {
         this.form.get('indicador')?.disable();
       }
+
+      this.colunas = [];
+      this.linhas = [];
     });
   }
 
   public atualizar() {
     this.processando = true;
-    this.conquistas = [];
+    this.colunas = [];
+    this.linhas = [];
 
     const url = this.form.get('tipo')?.value;
     const dtInicio = this.form.get('dtInicio')?.value.toISOString().substring(0, 10);
@@ -63,7 +68,14 @@ export class ConquistaGeralComponent implements OnInit {
     this.http
       .get(this.urlBase + url, { params: { dtInicio, dtFim, indicador } })
       .pipe(finalize(() => (this.processando = false)))
-      .subscribe((dados: any) => (this.conquistas = dados));
+      .subscribe((dados: any) => {
+        if (url === 'porPeriodo') {
+          this.linhas = dados;
+        } else {
+          this.colunas = dados.colunas;
+          this.linhas = dados.linhas;
+        }
+      });
   }
 
   public obterImagemPremio(premio: string, classificacao: string) {
