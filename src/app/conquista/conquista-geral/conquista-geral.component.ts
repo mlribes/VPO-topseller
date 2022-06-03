@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 
 import { IIdNome } from '../../geral/id-nome.interface';
@@ -14,7 +14,7 @@ export class ConquistaGeralComponent implements OnInit {
   private urlBase = 'conquista/';
 
   public processando = false;
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public tipos: IIdNome[] = [
     { id: 'porPeriodo', nome: 'Por período' },
     { id: 'porIndicador', nome: 'Por indicador' },
@@ -29,7 +29,7 @@ export class ConquistaGeralComponent implements OnInit {
   public colunas = [];
   public linhas = [];
 
-  constructor(private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: UntypedFormBuilder) {
     let dtFim = new Date();
     dtFim.setDate(0);
     let dtInicio = new Date(dtFim);

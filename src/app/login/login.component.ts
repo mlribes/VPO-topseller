@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AutenticacaoService } from '../geral/autenticacao.service';
 
@@ -9,12 +9,12 @@ import { AutenticacaoService } from '../geral/autenticacao.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  public form: FormGroup;
+  public form: UntypedFormGroup;
   public falhaLogin = false;
   private retUrl: string | null;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private autenticacaoService: AutenticacaoService

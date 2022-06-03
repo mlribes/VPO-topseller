@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 
 import { IIdNome } from '../../geral/id-nome.interface';
@@ -19,14 +19,14 @@ export class ObjetivoCrudComponent implements OnInit {
   public linhas = [];
 
   public idSelecionado: string | null = null;
-  public form: FormGroup | null = null;
+  public form: UntypedFormGroup | null = null;
   public premios: IIdNome[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {
