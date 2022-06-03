@@ -172,16 +172,22 @@
       <td>{{ _linha.vendedorNome }}</td>
       <td>{{ _linha.vendedorCpf }}</td>
       <ng-template ngFor let-_c [ngForOf]="colunas" let-_i="index">
-        <td class="posicao">{{ _linha.valores['c' + _i].posicao }}</td>
+        <td class="posicao">
+          <ng-template [ngIf]="_linha.valores['c' + _i] !== undefined">
+            {{ _linha.valores['c' + _i].posicao }}
+          </ng-template>
+        </td>
         <td class="premio">
-          <i
-            [class]="
-              'fa-solid fa-' +
-              obterImagemPremio(_c['premio'], _linha.valores['c' + _i].classificacao) +
-              ' ' +
-              _linha.valores['c' + _i].classificacao
-            "
-          ></i>
+          <ng-template [ngIf]="_linha.valores['c' + _i] !== undefined">
+            <i
+              [class]="
+                'fa-solid fa-' +
+                obterImagemPremio(_c['premio'], _linha.valores['c' + _i].classificacao) +
+                ' ' +
+                _linha.valores['c' + _i].classificacao
+              "
+            ></i>
+          </ng-template>
         </td>
       </ng-template>
     </tr>
