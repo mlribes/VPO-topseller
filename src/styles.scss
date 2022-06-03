@@ -12,6 +12,14 @@ body {
   color: var(--text-color);
 }
 
+/********************** Sobreescrita **********************/
+
+.p-inputtext-sm .p-calendar-w-btn .p-datepicker-trigger {
+  padding: unset !important;
+}
+
+/********************** Auxiliares **********************/
+
 .barra-botao {
   margin: 0.5rem 0;
 }
