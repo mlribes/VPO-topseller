@@ -9,16 +9,19 @@ import ptBr from '@angular/common/locales/pt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { HttpErrorInterceptor } from './geral/http-error.interceptor';
 import { TokenInterceptor } from './geral/token.interceptor';
 import { BaseUrlInterceptor } from './geral/base-url.interceptor';
 
 import { environment } from '../environments/environment';
 
+import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { MessageService } from 'primeng/api';
 
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -32,6 +35,7 @@ registerLocaleData(ptBr);
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    ToastModule,
     CardModule,
     InputTextModule,
     ButtonModule,
@@ -40,10 +44,12 @@ registerLocaleData(ptBr);
     AppRoutingModule,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: 'BASE_API_URL', useValue: environment.baseUrl },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
+    MessageService,
   ],
   bootstrap: [AppComponent],
 })
