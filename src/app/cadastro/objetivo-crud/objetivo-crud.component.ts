@@ -70,8 +70,8 @@ export class ObjetivoCrudComponent implements OnInit {
   private montarForm(dados: any) {
     this.form = this.fb.group({
       nome: [dados.nome, Validators.required],
-      dtInicio: [dados.dtInicio ? new Date(dados.dtInicio) : null, Validators.required],
-      dtFim: [dados.dtFim ? new Date(dados.dtFim) : null, Validators.required],
+      dtInicio: [dados.dtInicio ? new Date(dados.dtInicio + 'T00:00:00') : null, Validators.required],
+      dtFim: [dados.dtFim ? new Date(dados.dtFim + 'T00:00:00') : null, Validators.required],
       premio: [dados.premio || 'MEDALHA', Validators.required],
     });
   }
