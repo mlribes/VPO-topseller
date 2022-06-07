@@ -63,28 +63,31 @@
   [value]="linhas"
   responsiveLayout="scroll"
   p-datatable-striped
+  sortField="objetivoDtFim"
   styleClass="p-datatable-sm"
   *ngIf="form.get('tipo')?.value == 'porPeriodo'"
 >
   <ng-template pTemplate="header">
     <tr>
-      <th rowspan="2">Período</th>
-      <th rowspan="2">Loja</th>
-      <th rowspan="2">Vendedor</th>
-      <th rowspan="2" class="cpf">CPF</th>
+      <th rowspan="2" pSortableColumn="objetivoDtFim">Período<p-sortIcon field="objetivoDtFim"></p-sortIcon></th>
+      <th rowspan="2" pSortableColumn="lojaNome">Loja<p-sortIcon field="lojaNome"></p-sortIcon></th>
+      <th rowspan="2" pSortableColumn="vendedorNome">Vendedor<p-sortIcon field="vendedorNome"></p-sortIcon></th>
+      <th rowspan="2" class="cpf" pSortableColumn="vendedorCpf">CPF<p-sortIcon field="vendedorCpf"></p-sortIcon></th>
       <th colspan="2" class="indicador">Venda R$</th>
       <th colspan="2" class="indicador">Venda Qtde</th>
       <th colspan="2" class="indicador">PA</th>
       <th colspan="2" class="indicador">Ticket Médio</th>
     </tr>
     <tr>
-      <th class="posicao">Pos</th>
+      <th class="posicao" pSortableColumn="vlrVendaPosicao">Pos<p-sortIcon field="vlrVendaPosicao"></p-sortIcon></th>
       <th class="premio">Prêmio</th>
-      <th class="posicao">Pos</th>
+      <th class="posicao" pSortableColumn="qtdeVendaPosicao">Pos<p-sortIcon field="qtdeVendaPosicao"></p-sortIcon></th>
       <th class="premio">Prêmio</th>
-      <th class="posicao">Pos</th>
+      <th class="posicao" pSortableColumn="paPosicao">Pos<p-sortIcon field="paPosicao"></p-sortIcon></th>
       <th class="premio">Prêmio</th>
-      <th class="posicao">Pos</th>
+      <th class="posicao" pSortableColumn="ticketMedioPosicao">
+        Pos<p-sortIcon field="ticketMedioPosicao"></p-sortIcon>
+      </th>
       <th class="premio">Prêmio</th>
     </tr>
   </ng-template>
@@ -149,19 +152,22 @@
   [value]="linhas"
   responsiveLayout="scroll"
   p-datatable-striped
+  sortField="vendedorNome"
   styleClass="p-datatable-sm"
+  (sortFunction)="ordenarTabela($event)"
+  [customSort]="true"
   *ngIf="form.get('tipo')?.value == 'porIndicador'"
 >
   <ng-template pTemplate="header">
     <tr>
-      <th rowspan="2">Loja</th>
-      <th rowspan="2">Vendedor</th>
-      <th rowspan="2" class="cpf">CPF</th>
+      <th rowspan="2" pSortableColumn="lojaNome">Loja<p-sortIcon field="lojaNome"></p-sortIcon></th>
+      <th rowspan="2" pSortableColumn="vendedorNome">Vendedor<p-sortIcon field="vendedorNome"></p-sortIcon></th>
+      <th rowspan="2" class="cpf" pSortableColumn="vendedorCpf">CPF<p-sortIcon field="vendedorCpf"></p-sortIcon></th>
       <th colspan="2" class="periodo" *ngFor="let _c of colunas">{{ _c['nome'] }}</th>
     </tr>
     <tr>
-      <ng-template ngFor let-_c [ngForOf]="colunas">
-        <th class="posicao">Pos</th>
+      <ng-template ngFor let-_c [ngForOf]="colunas" let-_i="index">
+        <th class="posicao" [pSortableColumn]="'_c' + _i">Pos<p-sortIcon [field]="'_c' + _i"></p-sortIcon></th>
         <th class="premio">Prêmio</th>
       </ng-template>
     </tr>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { SortEvent } from 'primeng/api';
 import { finalize } from 'rxjs';
 
 import { IIdNome } from '../../geral/id-nome.interface';
@@ -120,5 +121,38 @@ export class ConquistaGeralComponent implements OnInit {
           URL.revokeObjectURL(url);
         }
       });
+  }
+
+  ordenarTabela(event: SortEvent) {
+    event.data?.sort((data1, data2) => {
+      let value1 = this.obterValor(data1, event.field);
+      let value2 = this.obterValor(data2, event.field);
+      let result = null;
+
+      if (value1 == null && value2 != null) result = -1;
+      else if (value1 != null && value2 == null) result = 1;
+      else if (value1 == null && value2 == null) result = 0;
+      else if (typeof value1 === 'string' && typeof value2 === 'string') result = value1.localeCompare(value2);
+      else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
+
+      return (event.order || 0) * result;
+    });
+  }
+
+  obterValor(data: any, field: string | undefined): any {
+    let retorno = null;
+    if (field) {
+      if (!field.startsWith('_c')) {
+        retorno = data[field];
+      } else {
+        const coluna = field.substring(1);
+        const vlrColuna = data.valores[coluna];
+        if (vlrColuna) {
+          retorno = vlrColuna.posicao;
+        }
+        retorno = retorno || Number.MAX_SAFE_INTEGER;
+      }
+    }
+    return retorno;
   }
 }
