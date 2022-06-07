@@ -1,7 +1,13 @@
 <div class="fundo flex align-items-center justify-content-center">
   <div class="container">
     <form [formGroup]="form" (ngSubmit)="entrar()">
-      <p-card header="Vendedor - Login">
+      <p-card>
+        <ng-template pTemplate="title">
+          <div class="flex align-items-center">
+            <img src="../../assets/sistema.png" />
+            <div class="flex-grow-1 text-right">Login</div>
+          </div>
+        </ng-template>
         <p-message severity="error" text="e-Mail/senha inválido" *ngIf="falhaLogin"></p-message>
         <div class="field">
           <label for="email">e-Mail</label>
