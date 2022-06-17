@@ -1,10 +1,15 @@
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 55px;
+}
+
 .cpf {
   width: 14rem;
 }
 
 .indicador,
 .periodo,
-.posicao,
 .premio {
   text-align: center !important;
 }

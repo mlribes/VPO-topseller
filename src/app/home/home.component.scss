@@ -1,3 +1,14 @@
+.layout-wrapper .layout-topbar {
+  height: 55px;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+}
+
+.layout-wrapper .layout-content {
+  padding: 60px 0;
+}
+
 button {
   margin: 0 0.5em;
 }

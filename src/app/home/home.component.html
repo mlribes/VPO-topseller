@@ -1,16 +1,13 @@
-<!--
-<mat-toolbar color="primary" class="shadow-5">
-  <mat-toolbar-row>
-    <button mat-button routerLink="/cadastro/objetivo" routerLinkActive="linkSelecionado">Objetivo</button>
-    <button mat-button routerLink="/conquista/conquistaGeral" routerLinkActive="linkSelecionado">Resultados</button>
-    <button mat-button (click)="sair()">Sair</button>
-  </mat-toolbar-row>
-</mat-toolbar>
--->
-<div class="shadow-5">
-  <p-tabMenu [model]="items"></p-tabMenu>
-</div>
+<div class="layout-wrapper">
+  <div class="layout-topbar">
+    <div class="shadow-5">
+      <p-tabMenu [model]="items"></p-tabMenu>
+    </div>
+  </div>
 
-<div class="p-2 pt-4">
-  <router-outlet></router-outlet>
+  <div class="layout-content">
+    <div class="p-2 pt-4">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
