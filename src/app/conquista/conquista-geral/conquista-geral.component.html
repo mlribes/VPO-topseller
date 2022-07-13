@@ -71,6 +71,7 @@
       <th pSortableColumn="lojaNome">Loja<p-sortIcon field="lojaNome"></p-sortIcon></th>
       <th pSortableColumn="vendedorNome">Vendedor<p-sortIcon field="vendedorNome"></p-sortIcon></th>
       <th class="cpf" pSortableColumn="vendedorCpf">CPF<p-sortIcon field="vendedorCpf"></p-sortIcon></th>
+      <th class="codigo" pSortableColumn="vendedorCodigo">Código<p-sortIcon field="vendedorCodigo"></p-sortIcon></th>
       <th class="premio" pSortableColumn="vlrVendaPosicao">
         Venda R$<p-sortIcon field="vlrVendaPosicao"></p-sortIcon>
       </th>
@@ -89,6 +90,7 @@
       <td>{{ _conquista.lojaNome }}</td>
       <td>{{ _conquista.vendedorNome }}</td>
       <td class="cpf">{{ _conquista.vendedorCpf }}</td>
+      <td class="codigo">{{ _conquista.vendedorCodigo }}</td>
       <td class="premio">
         {{ _conquista.vlrVendaPosicao | number }}
         <i
@@ -152,6 +154,9 @@
       <th rowspan="2" pSortableColumn="lojaNome">Loja<p-sortIcon field="lojaNome"></p-sortIcon></th>
       <th rowspan="2" pSortableColumn="vendedorNome">Vendedor<p-sortIcon field="vendedorNome"></p-sortIcon></th>
       <th rowspan="2" class="cpf" pSortableColumn="vendedorCpf">CPF<p-sortIcon field="vendedorCpf"></p-sortIcon></th>
+      <th rowspan="2" class="codigo" pSortableColumn="vendedorCodigo">
+        Código<p-sortIcon field="vendedorCodigo"></p-sortIcon>
+      </th>
       <ng-template ngFor let-_c [ngForOf]="colunas" let-_i="index">
         <th class="premio" [pSortableColumn]="'_c' + _i">
           {{ _c['nome'] }}<p-sortIcon [field]="'_c' + _i"></p-sortIcon>
@@ -164,6 +169,7 @@
       <td>{{ _linha.lojaNome }}</td>
       <td>{{ _linha.vendedorNome }}</td>
       <td>{{ _linha.vendedorCpf }}</td>
+      <td>{{ _linha.vendedorCodigo }}</td>
       <ng-template ngFor let-_c [ngForOf]="colunas" let-_i="index">
         <td class="premio">
           <ng-template [ngIf]="_linha.valores['c' + _i] !== undefined">
